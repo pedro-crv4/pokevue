@@ -67,6 +67,7 @@ h1 {
 }
 .pokemon-list {
     text-align: left;
+    margin-right: 30px;
     .pokemon-item {
         
         background-color: @white;
