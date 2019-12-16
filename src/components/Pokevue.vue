@@ -6,13 +6,13 @@
         </div>
         <div class="holder-pokemon-list h-pull-left h-mb50">
             <ul class="pokemon-list h-inline-block">
-                <li v-for="(pokemon, index) in pokemons" v-bind:key="index" class="pokemon-item">
-                    <a :href="pokemon.url" v-text="pokemon.name" @click="makeRequest(pokemon.url)" ></a>
+                <li v-for="(pokemon, index) in pokemons" v-bind:key="index" @click.prevent="currentTab = pokemon.name" class="pokemon-item">
+                    <a :href="pokemon.url" v-text="pokemon.name"></a>
                 </li>
             </ul>
         </div>
         <div class="holder-pokemon-details h-pull-left">
-            <pokemon v-for="pokemon in pokemons" v-bind:key="pokemon" v-bind:pokemon="pokemon"></pokemon>
+            <pokemon v-for="pokemon in pokemons" v-bind:key="pokemon.order" v-bind:pokemon="pokemon" v-bind:currentTab="currentTab"></pokemon>
         </div>
         
     </div>
@@ -22,29 +22,22 @@
 import Pokemon from './Pokemon'
 
 export default {
-name: 'Pokevue',
-components: { Pokemon },
-data() {
-    return {
-        baseURl: "https://pokeapi.co/api/v2/pokemon",
-        pokemons: [],
+    name: 'Pokevue',
+    components: { Pokemon },
+    data() {
+        return {
+            baseURl: "https://pokeapi.co/api/v2/pokemon",
+            pokemons: [],
+            currentTab: ''
+        }
+    },
+    
+    created() {
+        let promise = this.$http.get(this.baseURl);
+        promise.then(res => {
+        res.json().then(pokemons => this.pokemons = pokemons.results);
+        });
     }
-},
-
-methods: {
-    makeRequest: function(url) {
-    this.baseURl = url;
-    console.log(url);
-    }
-},
-
-created() {
-    let promise = this.$http.get(this.baseURl);
-    promise.then(res => {
-    res.json().then(pokemons => this.pokemons = pokemons.results);
-    });
-}
-
 }
 </script>
 

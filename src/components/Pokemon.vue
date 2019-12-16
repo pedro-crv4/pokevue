@@ -1,5 +1,5 @@
 <template>
-    <div class="pokemon">
+    <div class="pokemon" v-bind:is="selectedTab" v-bind:class="pokemon.name">
         <img :src="pokemonInfos.sprites.front_default" alt="">
         <span>{{ pokemonInfos.name }}</span>
     </div>
@@ -11,14 +11,20 @@
 export default {
   name: 'Pokemon',
   props: {
-      pokemon: { required:true }
+      pokemon: { required:true },
+      selectedTab: { required: true }
   },
   data() {
       return {
           pokemonInfos: this.pokemon
       }
   },
-  created() {
+  computed: {
+      isCurrentTab: function() {
+          return this.pokemon.name === this.selectedTab
+      }
+  },
+  mounted() {
     let promise = this.$http.get(this.pokemonInfos.url);
     promise.then(res => {
         res.json().then(pokemon => this.pokemonInfos = pokemon);
