@@ -1,39 +1,33 @@
 <template>
     <div class="container clearfix">
-        <div class="holder-logo h-mb40 h-text-center">
+        <div class="holder-logo h-mb40 h-text-center" @click.prevent="showHomePage">
             <img src="../assets/pokeball.png" alt="" class="logo pokeball">
             <h1>PokeVue</h1>
         </div>
-        <ul class="holder-box-pokemons" v-on:showDetails="renderDetails">
-            <pokemon-box-simple v-for="pokemon in pokemons" :key="pokemon.name" :pokemon="pokemon"></pokemon-box-simple>
+        <ul class="holder-box-pokemons" v-if="!isShowDetails">
+            <pokemon-box-simple v-for="pokemon in pokemons" :key="pokemon.name" :pokemon="pokemon" v-on:showDetails="showDetails(pokemon)"></pokemon-box-simple>
         </ul>
         
-        <!-- <div class="holder-pokemon-list h-pull-left h-mb50">
-            <ul class="pokemon-list h-inline-block">
-                <li v-for="(pokemon, index) in pokemons" v-bind:key="index" @click.prevent="currentTab = pokemon.name" class="pokemon-item">
-                    <a :href="pokemon.url" v-text="pokemon.name"></a>
-                </li>
-            </ul>
-        </div>
-        <div class="holder-pokemon-details h-pull-left">
-            <pokemon v-for="pokemon in pokemons" v-bind:key="pokemon.order" v-bind:pokemon="pokemon" v-bind:currentTab="currentTab"></pokemon>
-        </div> -->
+        <pokemon-details :pokemonProp="pokemon" v-if="isShowDetails" v-on:goHomePage="showHomePage"></pokemon-details>
         
     </div>
 </template>
 
 <script>
 import PokemonBoxSimple from './Pokemon-box-simple.vue';
+import PokemonDetails from './Pokemon-details.vue';
 // import Pokemon from './Pokemon'
 
 export default {
     name: 'Pokevue',
-    components: { PokemonBoxSimple },
+    components: { PokemonBoxSimple, PokemonDetails },
     data() {
         return {
             baseURl: "https://pokeapi.co/api/v2/pokemon",
             pokemons: [],
-            currentTab: ''
+            currentTab: '',
+            isShowDetails: false,
+            pokemon: ''
         }
     },
     created() {
@@ -43,8 +37,12 @@ export default {
         });
     },
     methods: {
-        renderDetails: function() {
-            console.log('render pokemon');
+        showDetails: function(pokemon) {
+            this.isShowDetails = true;      
+            this.pokemon = pokemon;             
+        },
+        showHomePage: function() {
+            this.isShowDetails = false;
         }
     }
 }
@@ -52,12 +50,17 @@ export default {
 
 <style lang="scss">
 
-.logo {
-    @include size(134px, 134px);
-    display: inline-block;
-    vertical-align: bottom  ;
-    margin-right: 10px; 
+
+.holder-logo {
+    cursor: pointer;
+    .logo {
+        @include size(134px, 134px);
+        display: inline-block;
+        vertical-align: bottom  ;
+        margin-right: 10px; 
+    }
 }
+
 a {
     text-decoration: none;
     color: $black-80;
@@ -71,5 +74,6 @@ h1 {
 .holder-box-pokemons {
     font-size: 0;
     margin: 0 -8px;
+    padding: 20px 40px 50px;
 }
 </style>

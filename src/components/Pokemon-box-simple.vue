@@ -1,27 +1,24 @@
 <template>
-<li class="pokemon-box">
-    <div class="inner-box relative">
-        <figure class="pokemon__image">
-            <img :src="'https://assets.pokemon.com/assets/cms2/img/pokedex/full/' + ('000'+pokemonInfo.id).slice(-3) + '.png'" alt="">
-        </figure>
-        <div class="pokemon__infos">
-            <p class="pokemon__infos__index">#{{  ('000'+pokemonInfo.id).slice(-3) }}</p>
-            <p class="pokemon__infos__name">{{ pokemonInfo.name }}</p>
-            <ul class="pokemon__infos__types"><li v-for="type in pokemonInfo.types" v-bind:key="type"><span :class="'background-color-'+type.type.name">{{ type.type.name }}</span></li> </ul>
+    <li class="pokemon-box">
+        <div class="inner-box relative">
+            <figure class="pokemon__image">
+                <img :src="'https://assets.pokemon.com/assets/cms2/img/pokedex/full/' + ('000'+pokemonInfo.id).slice(-3) + '.png'" alt="">
+            </figure>
+            <div class="pokemon__infos">
+                <p class="pokemon__infos__index">#{{  ('000'+pokemonInfo.id).slice(-3) }}</p>
+                <p class="pokemon__infos__name">{{ pokemonInfo.name }}</p>
+                <ul class="pokemon__infos__types"><li v-for="type in pokemonInfo.types" v-bind:key="type"><span :class="'background-color-'+type.type.name">{{ type.type.name }}</span></li> </ul>
+            </div>
+            <a href="" class="h-link-abs" :title="pokemon.name" @click.prevent="$emit('showDetails')"></a>
         </div>
-        <a href="" class="h-link-abs" :title="pokemon.name" v-on:click.prevent="$emit('showDetails')"></a>
-    </div>
-    
-    
-</li>
-    
+    </li>
 </template>
 
 <script>
 export default {
     name: 'PokemonBoxSimple',
     props: {
-        pokemon: { type: Object }
+        pokemon: { type: Array }
     },
     data() {
         return {
@@ -35,8 +32,9 @@ export default {
         });     
     },
     methods: {
-        showDetails: function() {
-            console.log('clicked');
+        clicked: function() {
+            console.log('clicked!');
+            
         }
     }
 }
@@ -46,7 +44,8 @@ export default {
     .pokemon-box {
         display: inline-block;
         width: 25%;
-        padding: 8px 25px;
+        padding: 25px 25px;
+        vertical-align: top;
         @include box-sizing;
         .pokemon__image {
             background-color: $black-10;
@@ -72,7 +71,7 @@ export default {
                 }
                 &__types {
                     color: $white;
-                    width: 50%;
+                    width: 65%;
                     font-size: 0;
                     li {
                         display: inline-block;
@@ -80,6 +79,7 @@ export default {
                         width: 50%;
                         @include box-sizing;
                         span {
+                            text-align: center;
                             display: block;
                             font-size: 13px;
                             font-weight: 500;
@@ -97,6 +97,5 @@ export default {
                 }
             }
         }
-        
     }
 </style>

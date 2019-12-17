@@ -16,10 +16,10 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: $global-font-family;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
