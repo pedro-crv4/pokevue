@@ -1,10 +1,14 @@
 <template>
     <div class="container clearfix">
-        <div class="holder-logo h-mb40">
+        <div class="holder-logo h-mb40 h-text-center">
             <img src="../assets/pokeball.png" alt="" class="logo pokeball">
             <h1>PokeVue</h1>
         </div>
-        <div class="holder-pokemon-list h-pull-left h-mb50">
+        <ul class="holder-box-pokemons" v-on:showDetails="renderDetails">
+            <pokemon-box-simple v-for="pokemon in pokemons" :key="pokemon.name" :pokemon="pokemon"></pokemon-box-simple>
+        </ul>
+        
+        <!-- <div class="holder-pokemon-list h-pull-left h-mb50">
             <ul class="pokemon-list h-inline-block">
                 <li v-for="(pokemon, index) in pokemons" v-bind:key="index" @click.prevent="currentTab = pokemon.name" class="pokemon-item">
                     <a :href="pokemon.url" v-text="pokemon.name"></a>
@@ -13,17 +17,18 @@
         </div>
         <div class="holder-pokemon-details h-pull-left">
             <pokemon v-for="pokemon in pokemons" v-bind:key="pokemon.order" v-bind:pokemon="pokemon" v-bind:currentTab="currentTab"></pokemon>
-        </div>
+        </div> -->
         
     </div>
 </template>
 
 <script>
-import Pokemon from './Pokemon'
+import PokemonBoxSimple from './Pokemon-box-simple.vue';
+// import Pokemon from './Pokemon'
 
 export default {
     name: 'Pokevue',
-    components: { Pokemon },
+    components: { PokemonBoxSimple },
     data() {
         return {
             baseURl: "https://pokeapi.co/api/v2/pokemon",
@@ -31,52 +36,40 @@ export default {
             currentTab: ''
         }
     },
-    
     created() {
         let promise = this.$http.get(this.baseURl);
         promise.then(res => {
         res.json().then(pokemons => this.pokemons = pokemons.results);
         });
+    },
+    methods: {
+        renderDetails: function() {
+            console.log('render pokemon');
+        }
     }
 }
 </script>
 
-<style lang="less">
-@import "../assets/less/reset.less";
-@import "../assets/less/base.less";
-@import "../assets/less/colors.less";
-@import "../assets/less/typographic.less";
-@import "../assets/less/mixins.less";
-@import "../assets/less/helpers.less";
+<style lang="scss">
 
 .logo {
-    .size(134px, 134px);
+    @include size(134px, 134px);
     display: inline-block;
     vertical-align: bottom  ;
     margin-right: 10px; 
 }
 a {
     text-decoration: none;
-    color: @black-80;
+    color: $black-80;
 }
 h1 {
-    font-family: 'Pokemon-Solid';
+    font-family: $global-font-family;
     font-size: 124px !important;
     display: inline-block;
-    color: @yellow;
+    color: $yellow;
 }
-.pokemon-list {
-    text-align: left;
-    margin-right: 30px;
-    .pokemon-item {
-        
-        background-color: @white;
-        border: 2px solid @navy-blue;
-        a {
-            padding: 10px 16px;
-            text-transform: capitalize;
-            display: block;
-        }
-    }
+.holder-box-pokemons {
+    font-size: 0;
+    margin: 0 -8px;
 }
 </style>

@@ -1,0 +1,18 @@
+
+@mixin box-sizing {
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+@mixin size($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+// Margins
+// -------
+@mixin mt($v) { margin-top:    $v; }
+@mixin mr($v) { margin-right:  $v; }
+@mixin mb($v) { margin-bottom: $v; }
+@mixin ml($v) { margin-left:   $v; }

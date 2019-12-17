@@ -1,0 +1,99 @@
+
+$white       : #FFF;
+$black       : #666;
+$orange      : #F08D6E;
+$green       : #4BC383;
+$yellow      : #FFCB05;
+$blue        : #3D7DCA;
+$navy-blue   : #003A70;
+
+
+.c-white		{ color: $white !important }
+.c-black		{ color: $black !important }
+.c-orange		{ color: $orange !important }
+.c-green		{ color: $green !important }
+.c-yellow		{ color: $yellow !important }
+.c-blue		    { color: $blue !important }
+.c-navy-blue    { color: $navy-blue !important }
+
+
+
+//Background color 
+.background-color {
+    &-grass {
+        background-color: #9bcc50;
+    }
+    &-poison {
+        background-color: #b97fc9;
+    }
+    &-bug {
+        background-color: #729f3f;
+    }
+    &-fairy {
+        background-color: #fdb9e9;
+    }
+    &-fire {
+        background-color: #fd7d24;
+    }
+    &-ghost {
+        background-color: #7b62a3;
+    }
+    &-normal {
+        background-color: #a4acaf;
+    }
+    &-psychic {
+        background-color: #f366b9;
+    }
+    &-steel {
+        background-color: #9eb7b8;
+    }
+    &-dark {
+        background-color: #707070;
+    }
+    &-electric {
+        background-color: #eed535;
+    }
+    &-fighting {
+        background-color: #d56723;
+    }
+    &-ice {
+        background-color: #51c4e7;
+    }
+    &-rock {
+        background-color: #a38c21;
+    }
+    &-water {
+        background-color: #4592c4;
+    }
+    &-flying {
+        background: linear-gradient(180deg, #3dc7ef 50%, #bdb9b8 50%);
+    }
+    &-dragon {
+        background: linear-gradient(180deg, #53a4cf 50%, #f16e57 50%);
+    }
+    &-ground {
+        background: linear-gradient(180deg, #f7de3f 50%, #ab9842 50%);
+    }
+
+}
+// Escalas de cinza
+// ----------------
+$black-10:  darken(#FFF, 10%); /* #E6E6E6; */
+$black-20:  darken(#FFF, 20%); /* #CCC; */
+$black-30:  darken(#FFF, 30%); /* #B3B3B3; */
+$black-40:  darken(#FFF, 40%); /* #999999; */
+$black-50:  darken(#FFF, 50%); /* #808080; */
+$black-60:  darken(#FFF, 60%); /* #666666; */
+$black-70:  darken(#FFF, 70%); /* #4D4D4D; */
+$black-80:  darken(#FFF, 80%); /* #333333; */
+$black-90:  darken(#FFF, 90%); /* #191919; */
+
+.c-black-10 { color: $black-10 !important }
+.c-black-20 { color: $black-20 !important }
+.c-black-30 { color: $black-30 !important }
+.c-black-40 { color: $black-40 !important }
+.c-black-50 { color: $black-50 !important }
+.c-black-60 { color: $black-60 !important }
+.c-black-70 { color: $black-70 !important }
+.c-black-80 { color: $black-80 !important }
+.c-black-90 { color: $black-90 !important }

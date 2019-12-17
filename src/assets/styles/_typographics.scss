@@ -1,0 +1,56 @@
+// @font-face {
+//     font-family:'Pokemon-Solid';
+//     src: url(../fonts/pokemon/Pokemon-Solid.ttf) format('truetype');
+//     font-style: normal;
+//     font-weight: 400
+// }
+
+$global-font-family: 'Rubik', sans-serif;
+
+
+// Baseline
+// --------
+$baseLineHeight: 18px;
+
+// Parágrafos
+// ----------
+p {	
+    font-size: 13px;
+    line-height: $baseLineHeight;
+}
+
+
+// Títulos
+// -------
+h1, .f-h1 { font-size: 24px; }
+h2, .f-h2 { font-size: 22px; }
+h3, .f-h3 { font-size: 20px; }
+h4, .f-h4 { font-size: 18px; }
+h5, .f-h5 { font-size: 15px; }
+h6, .f-h6 { font-size: 12px; }
+
+.f-0  { font-size:  0px; }
+.f-10 { font-size: 10px; }
+.f-11 { font-size: 11px; }
+.f-12 { font-size: 12px; }
+.f-13 { font-size: 13px; }
+.f-14 { font-size: 14px; }
+.f-15 { font-size: 15px; }
+.f-16 { font-size: 16px; }
+.f-17 { font-size: 17px; }
+.f-18 { font-size: 18px; }
+.f-19 { font-size: 19px; }
+.f-20 { font-size: 20px; }
+
+@mixin f-0()  { font-size:  0px; }
+@mixin f-10() { font-size: 10px; }
+@mixin f-11() { font-size: 11px; }
+@mixin f-12() { font-size: 12px; }
+@mixin f-13() { font-size: 13px; }
+@mixin f-14() { font-size: 14px; }
+@mixin f-15() { font-size: 15px; }
+@mixin f-16() { font-size: 16px; }
+@mixin f-17() { font-size: 17px; }
+@mixin f-18() { font-size: 18px; }
+@mixin f-19() { font-size: 19px; }
+@mixin f-20() { font-size: 20px; }

@@ -48,22 +48,16 @@ export default {
 }
 </script>
 
-<style lang="less">
-@import "../assets/less/reset.less";
-@import "../assets/less/base.less";
-@import "../assets/less/colors.less";
-@import "../assets/less/typographic.less";
-@import "../assets/less/mixins.less";
-@import "../assets/less/helpers.less";
+<style lang="scss">
 
 .pokemon {
     .pokemon__image {
-        background-color: @black-10;
+        background-color: $black-10;
         border-radius: 10px;
         margin-right: 20px;
         img {
             vertical-align: middle;
-            .size(350px, 350px);
+            @include size(350px, 350px);
         }
     }
     
@@ -78,7 +72,7 @@ export default {
         }
         .pokemon__types {
             span {
-                color: @white;
+                color: $white;
                 padding: 3px 5px;
                 margin-right: 10px;
                 border-radius: 5px;
