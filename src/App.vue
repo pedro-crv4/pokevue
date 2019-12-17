@@ -1,18 +1,15 @@
 <template>
   <div id="app">
-    <pokevue></pokevue>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 
-import Pokevue from './components/Pokevue.vue'
+// import Pokevue from './components/Pokevue.vue'
 
 export default {
-  name: 'app',
-  components: {
-    Pokevue
-  }
+  name: 'app'
 }
 </script>
 
