@@ -9,7 +9,7 @@
                 <p class="pokemon__infos__name">{{ pokemonInfo.name }}</p>
                 <ul class="pokemon__infos__types"><li v-for="type in pokemonInfo.types" v-bind:key="type"><span :class="'background-color-'+type.type.name">{{ type.type.name }}</span></li> </ul>
             </div>
-            <a href="" class="h-link-abs" :title="pokemon.name" @click.prevent="$emit('showDetails')"></a>
+        <router-link :to="{ name:'pokemon-details', params: {id: pokemonInfo.id} }" class="h-link-abs"></router-link>
         </div>
     </li>
 </template>
@@ -18,24 +18,18 @@
 export default {
     name: 'PokemonBoxSimple',
     props: {
-        pokemon: { type: Array }
+        pokemonProp: Object
     },
     data() {
         return {
-            pokemonInfo: this.pokemon
+            pokemonInfo: ''
         }
     },
     mounted() {
-        let promise = this.$http.get(this.pokemonInfo.url);
+        let promise = this.$http.get(this.pokemonProp.url);
         promise.then(res => {
             res.json().then(pokemon => this.pokemonInfo = pokemon);
         });     
-    },
-    methods: {
-        clicked: function() {
-            console.log('clicked!');
-            
-        }
     }
 }
 </script>
@@ -47,6 +41,11 @@ export default {
         padding: 25px 25px;
         vertical-align: top;
         @include box-sizing;
+        .inner-box {
+            &:hover {
+                animation: bounce 0.5s step-start forwards;
+            }
+        }
         .pokemon__image {
             background-color: $black-10;
             border-radius: 8px;
@@ -71,12 +70,10 @@ export default {
                 }
                 &__types {
                     color: $white;
-                    width: 65%;
                     font-size: 0;
                     li {
                         display: inline-block;
                         padding-right: 10px;
-                        width: 50%;
                         @include box-sizing;
                         span {
                             text-align: center;

@@ -1,19 +1,20 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <default/>
   </div>
 </template>
 
 <script>
 
-// import Pokevue from './components/Pokevue.vue'
+import Default from '@/pages/Default'
 
 export default {
-  name: 'app'
+  name: 'app',
+  components: {Default}
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 #app {
   font-family: $global-font-family;
@@ -21,5 +22,13 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin-top: 60px;
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
 }
 </style>

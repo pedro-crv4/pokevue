@@ -1,8 +1,9 @@
 <template>
     <div class="pokemon-details clearfix" v-bind:class="pokemonData.name">
-        <div class="pokemon">
+        <div class="pokemon clearfix">
+            
             <div class="btn back h-inline-block h-mb30">
-                <a href="javascript:" @click.prevent="$emit('goHomePage')">Go back</a>
+                <a href="javascript:" @click="goBack">Go back</a>
             </div>
             <div class="h-mb30">
                 <span class="pokemon__name c-black-80">{{ pokemonData.name }} <span class="c-black-60">#{{  ('000'+pokemonData.id).slice(-3) }}</span> </span>
@@ -14,11 +15,13 @@
             
             <div class="pokemon__infos h-pull-left">
                 <ul>
-                    <li>Weight: {{ pokemonData.weight }}</li>
-                    <li>Height: {{ pokemonData.height }} </li>
+                    <li>Weight: <span>{{ pokemonData.weight }}</span></li>
+                    <li>Height: <span>{{ pokemonData.height }}</span></li>
                     <li class="pokemon__infos__types"> Types: <span v-for="type in pokemonData.types" v-bind:key="type" :class="'background-color-'+type.type.name">{{ type.type.name }}</span> </li>
-                    <li class="pokemon__infos__abilities">Abilities: </li>
-                    <!-- <span v-for="ability in pokemonData.abilities" :key="ability.ability.name">{{ ability.ability.name }}</span> -->
+                    <li class="pokemon__infos__abilities">Abilities:
+                        <span v-for="ability in pokemonData.abilities" :key="ability.ability.name"> {{ ability.ability.name }}</span>
+                    </li>
+                    
                 </ul>
                 
             </div>
@@ -33,12 +36,9 @@
 
 export default {
     name: 'PokemonDetails',
-    props: {
-        pokemonProp: { type: Object }
-    },
     data() {
         return {
-            pokemonData: this.pokemonProp
+            pokemonData: ''
         }
     },
     methods: {
@@ -48,10 +48,14 @@ export default {
                 console.log(element);
                 
             });
+        },
+        goBack() {
+           window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
         }
+ 
     },
     mounted() {
-        let promise = this.$http.get(this.pokemonData.url);
+        let promise = this.$http.get('https://pokeapi.co/api/v2/pokemon/' + this.$route.params.id);
         promise.then(res => {
             res.json().then(pokemon => this.pokemonData = pokemon);
         });     
@@ -96,6 +100,12 @@ export default {
             padding: 10px 20px;
             li {
                 margin-bottom: 10px;
+                color: $white;
+                span {
+                    color: $black;
+                    display: block;
+                    line-height: 26px;
+                }
             }
             &__types {
                 span {
@@ -107,8 +117,8 @@ export default {
                 }
             }
             &__abilities {
-                span:nth-child(n):not(:last-child) {
-                    background-color: red;
+                ul {
+                    margin-left: 10px;
                 }
             }
         }
