@@ -1,44 +1,48 @@
 <template>
 <li class="pokemon-box">
     <div class="inner-box relative">
-        <figure class="pokemon__image">
-            <img :src="'https://assets.pokemon.com/assets/cms2/img/pokedex/full/' + ('000'+pokemonInfo.id).slice(-3) + '.png'" alt="">
-        </figure>
-        <div class="pokemon__infos">
-            <p class="pokemon__infos__index">#{{  ('000'+pokemonInfo.id).slice(-3) }}</p>
-            <p class="pokemon__infos__name">{{ pokemonInfo.name }}</p>
-            <ul class="pokemon__infos__types"><li v-for="type in pokemonInfo.types" v-bind:key="type"><span :class="'background-color-'+type.type.name">{{ type.type.name }}</span></li> </ul>
+        <div class="holder-image">
+            <figure class="pokemon__image">
+                <img :src="'https://assets.pokemon.com/assets/cms2/img/pokedex/full/' + ('000'+pokemonInfos.id).slice(-3) + '.png'" alt="">
+            </figure>
+            <!-- <p class="pokemon__infos__name">{{ pokemonInfos.name }}</p> -->
         </div>
-        <a href="" class="h-link-abs" :title="pokemon.name" v-on:click.prevent="$emit('showDetails')"></a>
+        <a class="h-link-abs" v-on:click="openCard(pokemonInfos.name)"></a>
     </div>
-    
-    
+    <div class="pokemon-card h-hide">
+        <router-link :to="{ name: 'showPokemon', params: { currentTab: pokemonInfos.name, id: pokemonInfos.id, pokemon: pokemonInfos  } }" class="h-hide"></router-link>
+    </div>
 </li>
-    
 </template>
 
 <script>
 export default {
     name: 'PokemonBoxSimple',
+
     props: {
-        pokemon: { type: Object }
+        pokemon: { type: Object },
     },
+
+    methods: {
+        openCard: function(pokemon) {
+            this.$showOverlay = true;
+            console.log(pokemon);
+
+        }
+    },
+
     data() {
         return {
-            pokemonInfo: this.pokemon
+            pokemonInfos: this.pokemon,
         }
     },
+
     mounted() {
-        let promise = this.$http.get(this.pokemonInfo.url);
+        let promise = this.$http.get(this.pokemon.url);
         promise.then(res => {
-            res.json().then(pokemon => this.pokemonInfo = pokemon);
-        });     
+            res.json().then(pokemon => this.pokemonInfos = pokemon);
+        });
     },
-    methods: {
-        showDetails: function() {
-            console.log('clicked');
-        }
-    }
 }
 </script>
 
@@ -46,30 +50,95 @@ export default {
     .pokemon-box {
         display: inline-block;
         width: 25%;
-        padding: 8px 25px;
+        margin-bottom: 35px;
+        position: relative;
         @include box-sizing;
+
+        &:hover {
+            .holder-image {
+                border-color: #2e3b41;
+            }
+        }
+
+        .inner-box {
+            text-align: center; 
+        }
+
+        .holder-image {
+            text-align: center;
+            position: relative;
+            padding: 15px;
+            width: fit-content;
+            margin: 0 auto 25px;
+            border-radius: 50%;
+            border: 3px solid #e6e6e6;
+            background-color: #e6e6e6;
+        }
+
         .pokemon__image {
-            background-color: $black-10;
-            border-radius: 8px;
             img {
                 @include size(16vw, 16vw);
                 max-width: 205px;
                 max-height: 205px;
-                display: block;
-                margin: 0 auto;
+                display: inline-block;
             } 
         }
+
+        &:hover {
+            .pokemon {
+                &__infos {
+                    &__small {
+                        .image {
+                            &.-back {
+                                display: block;
+                            }
+
+                            &.-front {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         .pokemon {
             &__infos {
+                position: relative;
+
                 &__index {
                     color: $black-30;
                     font-weight: 700;
+                    display: inline-block;
+                    padding: 5px;
+                    left: 15px;
+                    position: absolute;
+                    top: 10px;
+                    color: #000000;
                 }
+
+                &__small {
+                    margin: 0 !important;
+
+                    .image {
+                        position: absolute;
+                        top: -50px;
+                        transition: all .2s;
+                        
+                        &.-back {
+                            display: none;
+                        }
+                    }
+                }
+
                 &__name {
                     font-size: 22px;
                     text-transform: capitalize;
                     font-weight: 700;
+                    display: inline-block;
+                    color: #212121;
                 }
+
                 &__types {
                     color: $white;
                     width: 50%;
@@ -97,6 +166,5 @@ export default {
                 }
             }
         }
-        
     }
 </style>

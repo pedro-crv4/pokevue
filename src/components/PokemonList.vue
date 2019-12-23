@@ -1,22 +1,15 @@
 <template>
-    <div class="container clearfix">
-        <div class="holder-logo h-mb60 h-text-center">
-            <img src="../assets/header.png" alt="" class="logo pokeball">
-        </div>
-
-        <router-view></router-view>
-        
-        <div class="bg-overlay" v-show="$showOverlay"></div>
-    </div>
+    <ul class="holder-box-pokemons" v-on:showDetails="renderDetails">
+        <pokemon-box-simple v-for="pokemon in pokemons" :key="pokemon.name" :pokemon="pokemon"></pokemon-box-simple>
+    </ul>
 </template>
 
 <script>
-// import PokemonBoxSimple from './Pokemon-box-simple.vue';
-// import Pokemon from './Pokemon'
+import PokemonBoxSimple from './Pokemon-box-simple.vue';
 
 export default {
     name: 'Pokevue',
-    // components: { PokemonBoxSimple },
+    components: { PokemonBoxSimple },
     data() {
         return {
             baseURl: "https://pokeapi.co/api/v2/pokemon-species/?limit=45",
@@ -40,11 +33,6 @@ export default {
 
 <style lang="scss">
 
-.logo {
-    @include size(525px, auto);
-    display: inline-block;
-    vertical-align: bottom;
-}
 a {
     text-decoration: none;
     color: $black-80;
@@ -59,19 +47,4 @@ h1 {
     font-size: 0;
     margin: 0 -8px;
 }
-
-.bg-overlay {
-    background: rgba(0,0,0,0.8);
-    bottom: 0;
-    display: block;
-    height: 100%;
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    visibility: visible;
-    width: 100%;
-    z-index: 16;
-}
-
 </style>
