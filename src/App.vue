@@ -13,8 +13,8 @@ export default {
   components: {
     Pokevue
   }
-
 }
+
 </script>
 
 <style lang="less">

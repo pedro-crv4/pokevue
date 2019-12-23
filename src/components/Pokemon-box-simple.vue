@@ -9,9 +9,18 @@
         </div>
         <a class="h-link-abs" v-on:click="openCard(pokemonInfos.name)"></a>
     </div>
-    <div class="pokemon-card h-hide">
-        <router-link :to="{ name: 'showPokemon', params: { currentTab: pokemonInfos.name, id: pokemonInfos.id, pokemon: pokemonInfos  } }" class="h-hide"></router-link>
+    <transition>
+    <div class="pokemon-card" :class="{'visible': pokemonVisible == pokemonName}">
+        
+            <div class="holder-infos">
+                <figure class="pokemon__image">
+                    <img :src="'https://assets.pokemon.com/assets/cms2/img/pokedex/full/' + ('000'+pokemonInfos.id).slice(-3) + '.png'" alt="">
+                </figure>
+                <router-link class="h-link-abs" :to="{ name: 'showPokemon', params: { currentTab: pokemonInfos.name, id: pokemonInfos.id, pokemon: pokemonInfos  } }"></router-link>
+            </div>
+        
     </div>
+    </transition>
 </li>
 </template>
 
@@ -23,17 +32,30 @@ export default {
         pokemon: { type: Object },
     },
 
+    computed: {
+        isVisible () {
+            return this.$store.state.isVisible
+        },
+
+        pokemonName() {
+            return this.$store.state.pokemonName
+        }
+    },
+
     methods: {
         openCard: function(pokemon) {
-            this.$showOverlay = true;
-            console.log(pokemon);
+            this.$store.commit('show');
+            this.$store.commit('showPokemonCard', pokemon);
+            this.pokemonVisible = pokemon;
 
+            console.log(pokemon);
         }
     },
 
     data() {
         return {
             pokemonInfos: this.pokemon,
+            pokemonVisible: ''
         }
     },
 
@@ -49,19 +71,22 @@ export default {
 <style lang="scss">
     .pokemon-box {
         display: inline-block;
-        width: 25%;
+        width: 33.3%;
         margin-bottom: 35px;
         position: relative;
         @include box-sizing;
 
-        &:hover {
-            .holder-image {
-                border-color: #2e3b41;
-            }
-        }
-
         .inner-box {
-            text-align: center; 
+            text-align: center;
+            overflow: hidden;
+
+            &:hover {
+                cursor: pointer;
+                
+                .holder-image {
+                    border-color: #2e3b41;
+                }
+            }
         }
 
         .holder-image {
@@ -73,6 +98,7 @@ export default {
             border-radius: 50%;
             border: 3px solid #e6e6e6;
             background-color: #e6e6e6;
+            transition: all .15s;
         }
 
         .pokemon__image {
@@ -81,6 +107,7 @@ export default {
                 max-width: 205px;
                 max-height: 205px;
                 display: inline-block;
+                padding: 10px;
             } 
         }
 
@@ -165,6 +192,20 @@ export default {
                     margin-top: 10px;
                 }
             }
+        }
+    }
+
+    .pokemon-card {
+        display: none;
+        width: 100px;
+        height: 100px;
+        background-color: #FFF;
+        position: absolute;
+        z-index: 20;
+        top: 0;
+
+        &.visible {
+            display: block;
         }
     }
 </style>

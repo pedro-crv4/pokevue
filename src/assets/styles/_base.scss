@@ -18,12 +18,13 @@ body {
 // Container
 // ---------
 $widthContainer: 1300px;
+
 .container {
     width: $widthContainer;
     max-width: 100%;
     position: relative;
     margin: 0 auto;
-    padding: 0 55px;
+    padding: 0 145px;
     @include box-sizing;
 }
 

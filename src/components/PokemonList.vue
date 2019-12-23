@@ -1,5 +1,5 @@
 <template>
-    <ul class="holder-box-pokemons" v-on:showDetails="renderDetails">
+    <ul class="holder-box-pokemons">
         <pokemon-box-simple v-for="pokemon in pokemons" :key="pokemon.name" :pokemon="pokemon"></pokemon-box-simple>
     </ul>
 </template>
@@ -24,8 +24,8 @@ export default {
         });
     },
     methods: {
-        renderDetails: function() {
-            console.log('render pokemon');
+        checkOverlay: function() {
+            console.log('oi');            
         }
     }
 }

@@ -5,18 +5,15 @@
         </div>
 
         <router-view></router-view>
-        
-        <div class="bg-overlay" v-show="$showOverlay"></div>
+
+        <div class="bg-overlay" v-show="isVisible" v-on:click="hideOverlay()"></div>
     </div>
 </template>
 
 <script>
-// import PokemonBoxSimple from './Pokemon-box-simple.vue';
-// import Pokemon from './Pokemon'
-
 export default {
     name: 'Pokevue',
-    // components: { PokemonBoxSimple },
+
     data() {
         return {
             baseURl: "https://pokeapi.co/api/v2/pokemon-species/?limit=45",
@@ -24,15 +21,29 @@ export default {
             currentTab: ''
         }
     },
+
     created() {
         let promise = this.$http.get(this.baseURl);
+
         promise.then(res => {
-        res.json().then(pokemons => this.pokemons = pokemons.results);
+            res.json().then(pokemons => this.pokemons = pokemons.results);
         });
     },
+
+    computed: {
+        isVisible () {
+            return this.$store.state.isVisible
+        }
+    },
+
     methods: {
-        renderDetails: function() {
+        openOverlay: function() {
             console.log('render pokemon');
+        },
+
+        hideOverlay: function() {
+            this.$store.commit('hide');
+            this.$store.commit('showPokemonCard', undefined);
         }
     }
 }
@@ -45,16 +56,19 @@ export default {
     display: inline-block;
     vertical-align: bottom;
 }
+
 a {
     text-decoration: none;
     color: $black-80;
 }
+
 h1 {
     font-family: $global-font-family;
     font-size: 124px !important;
     display: inline-block;
     color: $yellow;
 }
+
 .holder-box-pokemons {
     font-size: 0;
     margin: 0 -8px;
@@ -73,5 +87,4 @@ h1 {
     width: 100%;
     z-index: 16;
 }
-
 </style>
