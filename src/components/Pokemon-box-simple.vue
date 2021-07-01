@@ -7,9 +7,9 @@
             <div class="pokemon__infos">
                 <p class="pokemon__infos__index">#{{  ('000'+pokemonInfo.id).slice(-3) }}</p>
                 <p class="pokemon__infos__name">{{ pokemonInfo.name }}</p>
-                <ul class="pokemon__infos__types"><li v-for="type in pokemonInfo.types" v-bind:key="type"><span :class="'background-color-'+type.type.name">{{ type.type.name }}</span></li> </ul>
+                <ul class="pokemon__infos__types"><li v-for="type in pokemonInfo.types" :key="type.name"><span :class="'background-color-'+type.type.name">{{ type.type.name }}</span></li> </ul>
             </div>
-        <router-link :to="{ name:'pokemon-details', params: {id: pokemonInfo.id} }" class="h-link-abs"></router-link>
+        <router-link :to="{ name:'pokemon-details', params: {id: pokemonInfo.id} }" class="h-link-abs" @click.native="$store.commit('show')"></router-link>
         </div>
     </li>
 </template>
@@ -30,7 +30,7 @@ export default {
         promise.then(res => {
             res.json().then(pokemon => this.pokemonInfo = pokemon);
         });     
-    }
+    },
 }
 </script>
 

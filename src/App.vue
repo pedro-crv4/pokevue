@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <default/>
+    <default @showOverlay="showOverlay()"/>
   </div>
 </template>
 

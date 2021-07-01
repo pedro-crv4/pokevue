@@ -13,18 +13,22 @@
                 <img :src="'https://assets.pokemon.com/assets/cms2/img/pokedex/full/' + ('000'+pokemonData.id).slice(-3) + '.png'" alt="">
             </div>
             
-            <div class="pokemon__infos h-pull-left">
-                <ul>
+                <ul class="pokemon__infos h-pull-left">
                     <li>Weight: <span>{{ pokemonData.weight }}</span></li>
                     <li>Height: <span>{{ pokemonData.height }}</span></li>
-                    <li class="pokemon__infos__types"> Types: <span v-for="type in pokemonData.types" v-bind:key="type" :class="'background-color-'+type.type.name">{{ type.type.name }}</span> </li>
+                    <li class="pokemon__infos__types"> Types: 
+                        <ul>
+                            <li v-for="type in pokemonData.types" v-bind:key="type.name" :class="'background-color-'+type.type.name"><span> {{ type.type.name }} </span></li>
+                        </ul>
                     <li class="pokemon__infos__abilities">Abilities:
-                        <span v-for="ability in pokemonData.abilities" :key="ability.ability.name"> {{ ability.ability.name }}</span>
+                        <ul>
+                            <li v-for="ability in pokemonData.abilities" :key="ability.ability.name"> {{ ability.ability.name }}</li>
+                        </ul>
+                        
                     </li>
                     
                 </ul>
                 
-            </div>
         </div>
         
         
@@ -54,11 +58,17 @@ export default {
         }
  
     },
-    mounted() {
+    created() {
         let promise = this.$http.get('https://pokeapi.co/api/v2/pokemon/' + this.$route.params.id);
         promise.then(res => {
             res.json().then(pokemon => this.pokemonData = pokemon);
-        });     
+        });   
+    },
+    mounted() {
+        this.$nextTick(function() {
+            this.$store.commit('hide');     
+            console.log('next tick');
+        });
     }
 }
 </script>
@@ -98,7 +108,7 @@ export default {
             background-color: #8EDFFF;
             border-radius: 10px;
             padding: 10px 20px;
-            li {
+            & > li {
                 margin-bottom: 10px;
                 color: $white;
                 span {
@@ -108,7 +118,8 @@ export default {
                 }
             }
             &__types {
-                span {
+                li {
+                    display: inline-block;
                     color: $white;
                     padding: 3px 5px;
                     margin-right: 10px;
@@ -118,7 +129,15 @@ export default {
             }
             &__abilities {
                 ul {
-                    margin-left: 10px;
+                    display: inline-block;
+                    li {
+                        display: inline-block;
+                        color: $black;
+                        margin-right: 3px;
+                        &:not(:last-child)::after {
+                            content: ',';
+                        }
+                    }
                 }
             }
         }

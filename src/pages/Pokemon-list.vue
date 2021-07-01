@@ -20,11 +20,17 @@ export default {
             pokemonInfo: ''
         }
     },
-    mounted() {
-        let promise = this.$http.get(this.url + 'pokemon');
-        promise.then(res => {
-            res.json().then(pokemon => this.pokemonInfo = pokemon.results);
-        });     
+    created() { 
+        
+        if(localStorage.getItem('pokemons')){
+            this.pokemonInfo = JSON.parse(localStorage.getItem('pokemons'));
+        }else {
+            let promise = this.$http.get(this.url + 'pokemon');
+
+            promise.then(res => {
+                res.json().then(pokemon => this.pokemonInfo = pokemon.results).then(pokemon => localStorage.setItem('pokemons', JSON.stringify(pokemon)))
+            });
+        }
     }
 }
 </script>
